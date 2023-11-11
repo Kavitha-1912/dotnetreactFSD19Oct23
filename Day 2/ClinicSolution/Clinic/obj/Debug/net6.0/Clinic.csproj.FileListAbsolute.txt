@@ -1,0 +1,14 @@
+D:\console output\ClinicSolution\Clinic\obj\Debug\net6.0\Clinic.GeneratedMSBuildEditorConfig.editorconfig
+D:\console output\ClinicSolution\Clinic\obj\Debug\net6.0\Clinic.AssemblyInfoInputs.cache
+D:\console output\ClinicSolution\Clinic\obj\Debug\net6.0\Clinic.AssemblyInfo.cs
+D:\console output\ClinicSolution\Clinic\obj\Debug\net6.0\Clinic.csproj.CoreCompileInputs.cache
+D:\console output\ClinicSolution\Clinic\bin\Debug\net6.0\Clinic.exe
+D:\console output\ClinicSolution\Clinic\bin\Debug\net6.0\Clinic.deps.json
+D:\console output\ClinicSolution\Clinic\bin\Debug\net6.0\Clinic.runtimeconfig.json
+D:\console output\ClinicSolution\Clinic\bin\Debug\net6.0\Clinic.dll
+D:\console output\ClinicSolution\Clinic\bin\Debug\net6.0\Clinic.pdb
+D:\console output\ClinicSolution\Clinic\obj\Debug\net6.0\Clinic.dll
+D:\console output\ClinicSolution\Clinic\obj\Debug\net6.0\refint\Clinic.dll
+D:\console output\ClinicSolution\Clinic\obj\Debug\net6.0\Clinic.pdb
+D:\console output\ClinicSolution\Clinic\obj\Debug\net6.0\Clinic.genruntimeconfig.cache
+D:\console output\ClinicSolution\Clinic\obj\Debug\net6.0\ref\Clinic.dll
