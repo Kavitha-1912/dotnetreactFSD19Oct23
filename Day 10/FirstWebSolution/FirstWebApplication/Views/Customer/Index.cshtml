@@ -1,0 +1,30 @@
+﻿@* Strongly type the view *@
+@model IEnumerable<FirstWebApplication.Models.Customer>
+<html>
+<head>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <style>
+        .prod {
+            height: fit-content;
+            float: left;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    @foreach (var item in Model)
+    {
+        <div>
+            <div class="card prod" style="width: fit-content;">
+                <div class="card-body">
+                    <h5 class="card-title">Email: @item.Email</h5>
+                    <p class="card-text">Phone: @item.Phone</p>
+                    <p class="card-text">Password: @item.Password</p>
+                    <p class="card-text">Age: @item.Age</p>
+                </div>
+            </div>
+        </div>
+    }
+
+</body>
+</html>
