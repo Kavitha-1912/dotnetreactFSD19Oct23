@@ -1,0 +1,4 @@
+D:\console output\ClinicAppSolution\ClinicModelLibrary\obj\Debug\net6.0\ClinicModelLibrary.GeneratedMSBuildEditorConfig.editorconfig
+D:\console output\ClinicAppSolution\ClinicModelLibrary\obj\Debug\net6.0\ClinicModelLibrary.AssemblyInfoInputs.cache
+D:\console output\ClinicAppSolution\ClinicModelLibrary\obj\Debug\net6.0\ClinicModelLibrary.AssemblyInfo.cs
+D:\console output\ClinicAppSolution\ClinicModelLibrary\obj\Debug\net6.0\ClinicModelLibrary.csproj.CoreCompileInputs.cache
