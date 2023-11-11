@@ -1,0 +1,443 @@
+using ClinicModelLibrary;
+using ClinicBLLibrary;
+using ClinicDALLibrary;
+using System.Xml.Xsl;
+namespace ClinicApp
+{
+    internal class Program
+    {
+        IDoctorService doctorService;
+        public Program()
+        {
+            doctorService = new DoctorService();
+        }
+        void DisplayAdminMenu()
+        {
+            Console.WriteLine("1. Add Doctor's Details");
+            Console.WriteLine("2. Update Doctor's Details");
+            Console.WriteLine("3. Delete Doctor's Details");
+            Console.WriteLine("4. Show All Doctors details");
+            Console.WriteLine("0. Exit");
+        }
+        void AdminActivities()
+        {
+            int choice;
+            do
+            {
+                DisplayAdminMenu();
+                choice = Convert.ToInt32(Console.ReadLine());
+                switch (choice)
+                {
+                    case 0:
+                        Console.WriteLine("Thank you!!!");
+                        break;
+                    case 1:
+                        AddDoctor();
+                        break;
+                    case 2:
+                        UpdateDoctor();
+                        break;
+                    case 3:
+                        DeleteDoctor();
+                        break;
+                    case 4:
+                        ShowDetails();
+                        break;
+                    default:
+                        Console.WriteLine("Invalid choice \n Please choose the correct option");
+                        break;
+                }
+            } while (choice != 0);
+        }
+        private void ShowDetails()
+        {
+            Console.WriteLine("--------------------------------------");
+            var details = docRepository.getDoctorsDetails();
+            foreach (var detail in details)
+            {
+                Console.WriteLine(detail);
+                Console.WriteLine("---------------------------------------");
+            }
+            Console.WriteLine("********************************************");
+        }
+        void AddDoctor()
+        {
+            try
+            {
+                Doctor doctor = TakeDoctorDetails();
+                var result = doctorService.AddDoctor(doctor);
+                if(result != null)
+                {
+                    Console.WriteLine("Doctor Added");
+                }
+            }
+            catch(FormatException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            catch(NotAddedException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+        Doctor TakeDoctorDetails()
+        {
+            Doctor doctor = new Doctor();
+            Console.WriteLine("Enter doctor's Name");
+            doctor.name = Console.ReadLine();
+            Console.WriteLine("Enter doctor's Experience");
+            doctor. expeerience=Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Enter doctor's Mobile number");
+            doctor.phoneNumber = Console.ReadLine();
+            Console.WriteLine("Enter doctor's Specification");
+        }
+        int GetDoctorIdFromUser()
+        {
+            int id;
+            Console.WriteLine("Please enter the Doctor ID ");
+            id = Convert.ToInt32(Console.ReadLine());
+            return id;
+        }
+        private void DeleteDoctor()
+        {
+            try
+            {
+                int id = GetDoctorIdFromUser();
+                if (doctorService.Delete(id) != null)
+                    Console.WriteLine("Doctor deleted");
+            }
+            catch(NoSuchDoctorException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+        private void UpdateDoctor()
+        {
+            var id = GetDoctorIdFromUser();
+            int choice;
+            Console.WriteLine("Do you Want To Change Doctor's Experience or Mobile Number ? \nPress 1 for Experience\nPress 2 for Mobile Number");
+            choice = Convert.ToInt32(Console.ReadLine());
+            if (choice == 1 || choice == 2)
+                doctorRepository.Update(id, choice);
+            else
+                Console.WriteLine("Invalid choice!");
+            try
+            {
+                var result = doctorService.UpdateDoctor(id, experience);
+                var result2 = doctorService.UpdateDoctoe(id, phoneNumber);
+            }
+            catch(NoSuchDoctorException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+        }
+
+        private static int Main(string[] args)
+        {
+            Program program = new Program();
+            program.DisplayAdminMenu();
+            return 0;
+        }
+    }
+}
+-----------------------------------------------------------------------------------
+namespace ClinicBLLibrary
+{
+    public class DoctorService : IDoctorService
+    {
+        IRepository<int, Doctor> repository;
+        public DoctorService()
+        {
+            repository = new DoctorRepository();
+        }
+        /// <summary>
+        /// Adds the doctor to the collection using the repository
+        /// </summary>
+        /// <param name="doctor">The doctor to be added</param>
+        /// <returns></returns>
+        /// <exception cref="NotAddedException">Doctor Id duplicated</exception>
+        public Doctor AddDoctor(Doctor doctor)
+        {
+            var result=repository.Add(doctor);
+            if(result != null)
+                return result;
+            throw new NotAddedException();
+        }
+        public Doctor Delete(int id)
+        {
+            var doctor = GetDoctor(id);
+            if(doctor != null)
+            {
+                repository.Delete(id);
+                return doctor;
+            }
+            throw new NoSuchDoctorException();
+        }
+        /// <summary>
+        /// Returns the doctor for the given Id
+        /// </summary>
+        /// <param name="id">Id of the doctor to be returned</param>
+        /// <returns></returns>
+        /// <exception cref="NoSuchDoctorException">No doctor with the given Id</exception>
+        public Doctor GetDoctor(int id)
+        {
+            var result = repository.GetById(id);
+            return result == null ? throw new NoSuchDoctorException() : result;
+        }
+        public List<Doctors> GetDoctors()
+        {
+            var doctors = repository.getAll();
+            if (doctors.Count != 0)
+                return doctors;
+            throw new NoDoctorsAvailableException();
+        }
+        public Doctor UpdateDoctorPhoneNumber(int id,string phoneNumber,string action)
+        {
+            var doctor = GetDoctor(id);
+            if (doctor != null)
+            {
+                doctor.PhoneNumber = phoneNumber;
+                var result = repository.Update(doctor);
+                return result;
+            }
+            throw new NoSuchDoctorException();
+        }
+        public Doctor UpdateDoctorExperience(int id,int  experience)
+        {
+            var doctor = GetDoctor(id);
+            if(doctor!=null)
+            {
+                if (action == "add")
+                {
+                    doctor.experience += experience;
+                }
+                else if (action == "remove")
+                {
+                    doctor.experience -= experience;
+                }
+                else
+                    throw new InValidUpdateActionException();
+                var result = repository.Update(doctor);
+                return result;
+            }
+            throw new NoSuchDoctorException()
+        }
+    }
+}
+----------------------------------------------------------------------
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ClinicBLLibrary
+{
+    internal interface IDoctorService
+    {
+        public Doctor AddDoctor(Doctor doctor);
+        public Doctor UpdateDoctorExperience(int id, int experience);
+        public Doctor GetDoctor(int id);
+        public List<Doctor> GetDoctors();
+        public Doctor UpdatePhoneNumber(int id, string phoneNumber, string action);
+        public Doctor Delete(int id);
+    }
+}
+
+------------------------------------------------------------------------
+
+using System.Runtime.Serialization;
+
+namespace ClinicBLLibrary
+{
+    [Serializable]
+    public class InValidUpdateActionException : Exception
+    {
+        string message;
+        public InValidUpdateActionException()
+        {
+            message = "The action you have specified is not valid";
+        }
+        public override string Message => message;
+    }
+}
+------------------------------------------------------------------------
+using System.Runtime.Serialization;
+
+namespace ClinicBLLibrary
+{
+    [Serializable]
+    internal class NoDoctorsAvailableException : Exception
+    {
+        string message;
+        public NoDoctorsAvailableException()
+        {
+            message = "No doctors are available currently";
+        }
+        public override string Message => message;
+    }
+}
+------------------------------------------------------------------------
+using System.Runtime.Serialization;
+
+namespace ClinicBLLibrary
+{
+    [Serializable]
+    internal class NoSuchDoctorException : Exception
+    {
+        string message;
+        public NoSuchDoctorException()
+        {
+            message = "The doctor with the given id is not present";
+        }
+        public override string Message => message;
+    }
+}
+------------------------------------------------------------------------
+using System.Runtime.Serialization;
+
+namespace ClinicBLLibrary
+{
+    [Serializable]
+    internal class NotAddedException : Exception
+    {
+        string message;
+        public NotAddedException()
+        {
+            message = "Doctor was not added";
+        }
+        public override string Message => message;
+    }
+}
+------------------------------------------------------------------------
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ClinicDALLibrary
+{
+    internal class DoctorRepository : IRepositary<int, Doctor>
+    {
+        Dictionary<int, Doctor> doctors = new Dictionary<int, Product>();
+        ///<summary>
+        ///c
+        ///</summary>
+        ///<param name="doctor">Doctor object that has to be added</param>
+        ///<returns>The doctor that has been added</returns>
+        public Doctor Add(Doctor doctor)
+        {
+            int id = GetTheNextId();
+            try
+            {
+                doctor.Id = id;
+                doctors.Add(doctor.Id, doctor);
+                return doctor;
+            }
+            catch(ArgumentException e)
+            {
+                Console.WriteLine("The Doctor ID aleady exists");
+                Console.WriteLine(e.Message);
+            }
+            return null;
+        }
+        private int GetTheNextId()
+        {
+            if (doctors.Count == 0)
+                return 1;
+            int id = products.Keys.Max();
+            return ++id;
+        }
+        ///<summary>
+        ///Deletes the doctor from the dictionary using the id as key
+        ///</summary>
+        ///<param name="id">The Id of the doctor to be deleted</param>
+        ///<returns>The deleted doctor</returns>
+        public Doctor Delete(int id)
+        {
+            var doctor = doctors[id];
+            doctors.Remove(id);
+            return doctor;
+        }
+        public List<Doctor> GetAll()
+        {
+            var doctorList = doctors.Values.ToList();
+            return doctorList;
+        }
+        public Doctor GatById(int id)
+        {
+            if (doctors.ContainsKey(id))
+                return doctors[id];
+            return null;
+        }
+        public Doctor Update(Doctor doctor)
+        {
+            doctors[doctor.Id] = doctor;
+            return doctors[doctor.Id];
+        }
+    }
+}
+------------------------------------------------------------------------
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ClinicDALLibrary
+{
+    internal interface IRepositary<K,T> where T:class
+    {
+        public T Add(T item);
+        public T Update(T item);
+        public T Delete(K id);
+        public T GetById(K id);
+        public List<T> GetAll();
+    }
+}
+
+------------------------------------------------------------------------
+namespace ClinicModelLibrary
+{
+    public class Doctor
+    {
+        public int id { get; set; }
+        public string name { get; set; } = string.Empty;
+        public int experience { get; set; }
+        public string phoneNumber { get; set; } = string.Empty;
+        public string specification { get; set; } = string.Empty;
+        public object Id { get; private set; }
+
+        public Doctor()
+        {
+            id = 0;
+            name = string.Empty;
+            experience = 0;
+            phoneNumber = string.Empty;
+            specification = string.Empty;
+        }
+        ///<summary>
+        ///Construct the doctor object
+        ///</summary>
+        ///<param name="id"></param>
+        ///<param name="name"></param>
+        ///<param name="experience"></param>
+        ///<param name="phoneNumber"></param>
+        ///<param name="specification"></param>
+        public Doctor(int id,string name,int experience,string phoneNumber,string specifiaction)
+        {
+            Id = id;
+            Name = name;
+            Experience = experience;
+            PhoneNumber = phoneNumber;
+            Specification = specifiaction;
+        }
+        public override string ToString()
+        {
+            return $Doctor ID :{ Id}\nDoctor Name:{ Name}\nDoctor Experience :{ Experience}\nDoctor Phone Number: { PhoneNumber}\nDoctor Specification :{ Specification};
+        }
+    }
+}
+------------------------------------------------------------------------
