@@ -1,0 +1,165 @@
+1) print the store name, title name,, quantity, sale amount, pulisher name, author name for all the sales. Also print those books which have not been sold and authors who have not written.
+
+select
+    st.stor_name  'Store Name',
+    t.title  'Title Name',
+    s.qty  'Quantity',
+    s.qty * t.price  'Sale Amount',
+    p.pub_name  'Publisher Name',
+    CONCAT(au.au_fname, ' ', au.au_lname)  'Author Name',
+    'Sold'  'Status'
+from sales s
+join stores st on s.stor_id = st.stor_id
+join titles t on s.title_id = t.title_id
+join publishers p on t.pub_id = p.pub_id
+left join titleauthor ta on t.title_id = ta.title_id
+left join authors au on ta.au_id = au.au_id
+
+union all
+
+select
+    t.title  'Title Name',
+    p.pub_name  'Publisher Name',
+    null  'Quantity',
+    null  'Sale Amount',
+    null  'Store Name',
+    CONCAT(au.au_fname, ' ', au.au_lname)  'Author Name',
+    'Not Sold'  'Status'
+from titles t
+join publishers p on t.pub_id = p.pub_id
+left join titleauthor ta on t.title_id = ta.title_id
+left join authors au on ta.au_id = au.au_id
+
+union all
+
+select
+    null  'Store Name',
+    null  'Title Name',
+    null  'Quantity',
+    null  'Sale Amount',
+    null  'Publisher Name',
+    CONCAT(au.au_fname, ' ', au.au_lname)  'Author Name',
+    'Not Written'  'Status'
+from authors au
+left join titleauthor ta on au.au_id = ta.au_id;
+
+2) Create a stored procedure that will take the author name and print the total sales amount for all the books authored by him/her
+  Note : - If there are no books sold then print "Sale yet to gear up"
+
+
+create procedure get_total_sales_by_author (@author_name varchar(60))
+as
+begin
+	declare @total_sales decimal(10,2);
+	set @total_sales = (select sum(s.qty )* sum(t.price)  from sales s
+	inner join titles t ON s.title_id = t.title_id
+	inner join titleauthor ta ON t.title_id = ta.title_id
+	inner join authors a ON ta.au_id = a.au_id
+	where a.au_fname + ' ' + a.au_lname = @author_name)
+	if @total_sales IS NULL OR @total_sales = 0
+	begin
+		print 'Sale yet to gear up';
+	end
+	else
+	begin
+		print 'The total sales amount for ' + @author_name + ' is ' + CAST(@total_sales AS VARCHAR);
+	end
+end
+
+EXEC get_total_sales_by_author @author_name = 'Leary	Michael'
+
+3) print the details of the sale when the sale quantity is greater than the sale quantity of all the same titles sold in the same store
+
+select
+    s.stor_id  'Store ID',
+    s.title_id  'Title ID',
+    t.title  'Title',
+    s.qty  'Sale Quantity',
+    s.ord_date  'Sale Date'
+from sales s
+left join (select
+        s.stor_id,
+        s.title_id,
+        max(s.qty) AS max_qty
+    from sales s
+    group by s.stor_id, s.title_id)
+    max_sale_qty on s.stor_id = max_sale_qty.stor_id
+    and s.title_id = max_sale_qty.title_id
+    and s.qty > max_sale_qty.max_qty
+join titles t on s.title_id = t.title_id;
+
+4) Print the average price of every author's books withthe author's full name
+
+select
+    concat(au.au_fname, ' ', au.au_lname)  'Author Name',
+    AVG(t.price) 'Average Price'
+from authors au
+join titleauthor ta on au.au_id = ta.au_id
+join titles t on ta.title_id = t.title_id
+group by au.au_id, au.au_fname, au.au_lname;
+
+5) Print the schema of the titles table and locate all the constrants
+
+sp_columns 'titles'  -- Get the schema of the titles table
+
+sp_helpconstraint 'titles'  -- Locate the constraints for the titles table
+
+6) Create a procedure that will take the price and prints the count of book that are priced less than that
+
+create procedure proc_CountBooksPricedLessThan 
+	@Price decimal(10, 2)
+as
+begin
+    declare @BookCount int
+    select @BookCount = count(*)
+    from titles
+    where price < @Price
+
+    -- Print the count
+    PRINT 'Count of books priced less than ' + CAST(@Price AS VARCHAR) + ': ' + CAST(@BookCount AS VARCHAR)
+END
+
+EXEC proc_CountBooksPricedLessThan 20.00
+
+7) Find a way to ensure that the price of books are not updated if the price is below 7
+create trigger check_price_before_update
+on titles 
+instead of insert
+as
+begin
+    declare
+	@title_id varchar(6),
+	@title varchar(60),
+	@type char(12),
+	@pub_id char(4),
+	@price money,
+	@advance money,
+	@royalty int,
+	@ytd_sales int,
+	@notes varchar(200),
+	@pubdate datetime,
+	@new_price decimal(10,2);
+    set @new_price = (select  price from inserted);
+
+    if @new_price < 7
+    begin
+        print 'The price cannot be updated to below 7';
+    end
+	else
+	begin
+		insert into titles values(@title_id,@title,@type,@pub_id,@price,@advance,@royalty ,@ytd_sales ,@notes,@pubdate)
+	end
+end
+
+
+insert into titles values('AU1099','Learn From Failures',
+		'psychology','0599',6.00,15000.00,25,333,
+		'Here you can face fear of Failures','2023-10-30 00:00:00:000')
+
+
+8) print the books that have 'e' and 'a' in their name
+
+select title
+from titles
+where title like '%e%' and title like '%a%';
+
