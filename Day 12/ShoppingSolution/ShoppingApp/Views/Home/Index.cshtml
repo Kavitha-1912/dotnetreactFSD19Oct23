@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Shopping App</h1>
+    <p>Welcome to shop <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    @if (TempData.ContainsKey("username"))
+    {
+        <div class="alert alert-success">
+            Welcome @TempData["username"]
+        </div>
+    }
+</div>
