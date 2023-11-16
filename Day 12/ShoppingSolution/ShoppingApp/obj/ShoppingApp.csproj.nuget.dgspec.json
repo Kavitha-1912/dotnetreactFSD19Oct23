@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\ELCOT\\Downloads\\Shopping\\dotnetreactFSD19oct2023-master\\Day 12\\ShoppingSolution\\ShoppingApp\\ShoppingApp.csproj": {}
+    "D:\\Hexaware\\Day 12\\ShoppingSolution\\ShoppingApp\\ShoppingApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\ELCOT\\Downloads\\Shopping\\dotnetreactFSD19oct2023-master\\Day 12\\ShoppingSolution\\ShoppingApp\\ShoppingApp.csproj": {
+    "D:\\Hexaware\\Day 12\\ShoppingSolution\\ShoppingApp\\ShoppingApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\ELCOT\\Downloads\\Shopping\\dotnetreactFSD19oct2023-master\\Day 12\\ShoppingSolution\\ShoppingApp\\ShoppingApp.csproj",
+        "projectUniqueName": "D:\\Hexaware\\Day 12\\ShoppingSolution\\ShoppingApp\\ShoppingApp.csproj",
         "projectName": "ShoppingApp",
-        "projectPath": "C:\\Users\\ELCOT\\Downloads\\Shopping\\dotnetreactFSD19oct2023-master\\Day 12\\ShoppingSolution\\ShoppingApp\\ShoppingApp.csproj",
-        "packagesPath": "C:\\Users\\ELCOT\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\ELCOT\\Downloads\\Shopping\\dotnetreactFSD19oct2023-master\\Day 12\\ShoppingSolution\\ShoppingApp\\obj\\",
+        "projectPath": "D:\\Hexaware\\Day 12\\ShoppingSolution\\ShoppingApp\\ShoppingApp.csproj",
+        "packagesPath": "C:\\Users\\DS\\.nuget\\packages\\",
+        "outputPath": "D:\\Hexaware\\Day 12\\ShoppingSolution\\ShoppingApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\ELCOT\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\DS\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -54,9 +54,17 @@
               "target": "Package",
               "version": "[6.0.24, )"
             },
+            "Microsoft.Extensions.Logging.Log4Net.AspNetCore": {
+              "target": "Package",
+              "version": "[6.1.0, )"
+            },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[6.0.16, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.5.0, )"
             }
           },
           "imports": [
@@ -78,7 +86,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     }
