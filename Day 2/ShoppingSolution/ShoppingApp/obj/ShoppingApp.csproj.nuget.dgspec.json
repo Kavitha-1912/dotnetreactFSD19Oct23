@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\console output\\ShoppingSolution\\ShoppingApp\\ShoppingApp.csproj": {}
+    "D:\\Hexaware\\Day 2\\ShoppingSolution\\ShoppingApp\\ShoppingApp.csproj": {}
   },
   "projects": {
-    "D:\\console output\\ShoppingSolution\\ShoppingApp\\ShoppingApp.csproj": {
+    "D:\\Hexaware\\Day 2\\ShoppingSolution\\ShoppingApp\\ShoppingApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\console output\\ShoppingSolution\\ShoppingApp\\ShoppingApp.csproj",
+        "projectUniqueName": "D:\\Hexaware\\Day 2\\ShoppingSolution\\ShoppingApp\\ShoppingApp.csproj",
         "projectName": "ShoppingApp",
-        "projectPath": "D:\\console output\\ShoppingSolution\\ShoppingApp\\ShoppingApp.csproj",
-        "packagesPath": "C:\\Users\\ELCOT\\.nuget\\packages\\",
-        "outputPath": "D:\\console output\\ShoppingSolution\\ShoppingApp\\obj\\",
+        "projectPath": "D:\\Hexaware\\Day 2\\ShoppingSolution\\ShoppingApp\\ShoppingApp.csproj",
+        "packagesPath": "C:\\Users\\DS\\.nuget\\packages\\",
+        "outputPath": "D:\\Hexaware\\Day 2\\ShoppingSolution\\ShoppingApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\ELCOT\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\DS\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -55,7 +55,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     }
