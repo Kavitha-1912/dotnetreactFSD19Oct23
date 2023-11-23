@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ShoppingApp.Exceptions;
@@ -9,6 +10,7 @@ namespace ShoppingApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("reactApp")]
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;
@@ -36,7 +38,7 @@ namespace ShoppingApp.Controllers
             }
             return BadRequest(errorMessage);
         }
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPost]
         public ActionResult Create(Product product)
         {
