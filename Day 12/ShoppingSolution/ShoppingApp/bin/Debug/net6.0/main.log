@@ -297,3 +297,16 @@ FROM [Products] AS [p]
 SELECT [p].[Id], [p].[Name], [p].[Picture], [p].[Price], [p].[Quantity]
 FROM [Products] AS [p]
 2023-11-23 13:00:36,951 [.NET ThreadPool Worker] INFO ShoppingApp.Controllers.ProductController.Get[31] - Product Listed
+2023-11-24 09:10:01,993 [1] INFO Microsoft.Hosting.Lifetime.?[?] - Now listening on: http://localhost:5280
+2023-11-24 09:10:03,536 [1] INFO Microsoft.Hosting.Lifetime.OnApplicationStarted[0] - Application started. Press Ctrl+C to shut down.
+2023-11-24 09:10:03,610 [1] INFO Microsoft.Hosting.Lifetime.OnApplicationStarted[0] - Hosting environment: Development
+2023-11-24 09:10:03,620 [1] INFO Microsoft.Hosting.Lifetime.OnApplicationStarted[0] - Content root path: D:\Hexaware\Day 12\ShoppingSolution\ShoppingApp\
+2023-11-24 10:48:38,871 [1] INFO Microsoft.Hosting.Lifetime.?[?] - Now listening on: http://localhost:5280
+2023-11-24 10:48:39,916 [1] INFO Microsoft.Hosting.Lifetime.OnApplicationStarted[0] - Application started. Press Ctrl+C to shut down.
+2023-11-24 10:48:39,931 [1] INFO Microsoft.Hosting.Lifetime.OnApplicationStarted[0] - Hosting environment: Development
+2023-11-24 10:48:39,934 [1] INFO Microsoft.Hosting.Lifetime.OnApplicationStarted[0] - Content root path: D:\Hexaware\Day 12\ShoppingSolution\ShoppingApp\
+2023-11-24 10:59:00,833 [.NET ThreadPool Worker] INFO Microsoft.EntityFrameworkCore.Infrastructure.?[?] - Entity Framework Core 6.0.24 initialized 'ShoppingContext' using provider 'Microsoft.EntityFrameworkCore.SqlServer:6.0.24' with options: None
+2023-11-24 10:59:12,918 [.NET ThreadPool Worker] INFO Microsoft.EntityFrameworkCore.Database.Command.?[?] - Executed DbCommand (513ms) [Parameters=[@p0='?' (Size = 450), @p1='?' (Size = 8000) (DbType = Binary), @p2='?' (Size = 8000) (DbType = Binary), @p3='?' (Size = 4000)], CommandType='Text', CommandTimeout='30']
+SET NOCOUNT ON;
+INSERT INTO [Users] ([Username], [Key], [Password], [Role])
+VALUES (@p0, @p1, @p2, @p3);
